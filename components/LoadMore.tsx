@@ -2,16 +2,20 @@
 
 import Image from "next/image";
 import { useInView } from "react-intersection-observer";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import { fetchAnime } from "@/app/action";
 
 const LoadMore = () => {
   const { ref, inView } = useInView();
+  const [data, setData] = useState([]);
 
   useEffect(() => {
     if (inView) {
-      alert("Load more");
+      fetchAnime(2).then((res) => {
+        setData({ ...data, ...res });
+      });
     }
-  }, [inView]);
+  }, [inView, data, setData]);
 
   return (
     <>
